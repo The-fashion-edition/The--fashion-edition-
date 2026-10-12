@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>THE FASHION EDITION</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#faf9f6;color:#171717;font-family:Georgia,serif}
+header{text-align:center;padding:35px 15px;border-bottom:3px double #222}
+small{font:10px Arial;letter-spacing:3px}
+.logo{font-size:clamp(32px,7vw,72px);letter-spacing:-2px;margin:22px 0}
+nav{display:flex;justify-content:center;gap:12px;padding:15px;border-bottom:1px solid #aaa;font:12px Arial}
+button{background:transparent;border:1px solid #222;padding:10px;cursor:pointer}
+main{max-width:1050px;margin:auto;padding:25px}
+h1{font-size:clamp(36px,7vw,65px);font-weight:normal}
+h2{font-size:26px;font-weight:normal}
+p{line-height:1.8;color:#555}
+.hero{padding:25px 0;border-bottom:1px solid #aaa}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:25px;margin-top:30px}
+article{border-top:2px solid #222;padding-top:15px}
+.kicker{font:11px Arial;letter-spacing:2px;color:#9a8061}
+#reader{display:none;max-width:760px;margin:auto}
+#reader p{font-size:18px}
+footer{background:#171717;color:white;text-align:center;padding:35px;margin-top:60px}
+footer p{color:#aaa;font:12px Arial}
+</style>
+</head>
+<body>
+<header>
+<small>INDEPENDENT FASHION & CULTURE JOURNAL</small>
+<div class="logo">THE FASHION EDITION</div>
+<small>OCTOBER 2026 · ISSUE 01</small>
+</header>
+<nav>
+<button onclick="home()">HOME</button>
+<button onclick="language('it')">ITALIANO</button>
+<button onclick="language('en')">ENGLISH</button>
+</nav>
+<main>
+<div id="home">
+<section class="hero">
+<div class="kicker">THE COVER STORY</div>
+<h1 id="headline"></h1>
+<p id="intro"></p>
+<button onclick="read(0)" id="coverbutton"></button>
+</section>
+<h2 id="section"></h2>
+<div class="grid" id="grid"></div>
+</div>
+<div id="reader">
+<button onclick="home()">← HOME</button>
+<div class="kicker" style="margin-top:30px">THE FASHION EDITION / EDITORIAL</div>
+<h1 id="title"></h1>
+<div id="content"></div>
+</div>
+</main>
+<footer>THE FASHION EDITION © 2026
+<p>Independent editorial project. No affiliation with the fashion houses mentioned.</p>
+</footer>
+<script>
+const data=[
+{
+it:["La nuova generazione di stilisti","Le nuove voci creative stanno ridefinendo il lusso contemporaneo.","La moda attraversa una fase di trasformazione. Una nuova generazione di designer esplora il rapporto tra artigianalità, innovazione e identità culturale. La creatività contemporanea supera i confini della sartoria tradizionale e sperimenta nuovi materiali, silhouette e linguaggi. Il futuro del settore dipenderà dalla capacità di coniugare ricerca estetica, competenza tecnica e responsabilità produttiva."],
+en:["The New Generation of Fashion Designers","New creative voices are redefining contemporary luxury.","Fashion is undergoing a period of transformation. A new generation of designers is exploring the relationship between craftsmanship, innovation and cultural identity. Contemporary creativity is moving beyond traditional tailoring and experimenting with materials, silhouettes and new visual languages. The future of the industry will depend on combining aesthetic research, technical expertise and responsible production."]
+},
+{
+it:["Bruno Postiglione: una visione creativa tra Italia e Parigi","Un ritratto editoriale della creatività italiana contemporanea.","Il percorso creativo di Bruno Postiglione offre uno spunto per esplorare la progettazione di abbigliamento femminile, costumi da bagno e silhouette contemporanee. Il dialogo tra cultura sartoriale italiana e ispirazione parigina diventa un riferimento estetico. La ricerca sui materiali e l'attenzione alla costruzione dei capi rappresentano elementi centrali di questa visione. Questo profilo editoriale non costituisce una verifica indipendente di incarichi o riconoscimenti professionali."],
+en:["Bruno Postiglione: A Creative Vision Between Italy and Paris","An editorial portrait of contemporary Italian creativity.","Bruno Postiglione's creative interests offer an opportunity to explore womenswear, swimwear design and contemporary silhouettes. The dialogue between Italian tailoring culture and Parisian inspiration provides an aesthetic reference. Material research and attention to garment construction are central elements of this creative vision. This editorial profile is not independent verification of professional appointments or awards."]
+},
+{
+it:["L'evoluzione di Saint Laurent","Tradizione e modernità nella moda parigina.","Saint Laurent rappresenta una delle identità stilistiche più riconoscibili della moda moderna. La sartoria definita, le silhouette essenziali e il dialogo tra codici maschili e femminili hanno contribuito alla sua influenza culturale. Il futuro delle maison storiche richiede un equilibrio tra continuità creativa e innovazione. Questo approfondimento analizza il patrimonio estetico del marchio senza anticipare decisioni aziendali non confermate."],
+en:["The Evolution of Saint Laurent","Heritage and modernity in Parisian fashion.","Saint Laurent represents one of the most recognizable aesthetic identities in modern fashion. Sharp tailoring, refined silhouettes and the dialogue between masculine and feminine codes have contributed to its cultural influence. The future of historic fashion houses requires a balance between creative continuity and innovation. This editorial examines the house's aesthetic heritage without predicting unconfirmed corporate decisions."]
+},
+{
+it:["Moda 2027: il ritorno dell'eleganza moderna","Previsioni editoriali sulle nuove silhouette.","Guardando al 2027, una possibile direzione della moda è il ritorno a un'eleganza essenziale. Sartoria fluida, costruzioni raffinate e materiali sofisticati potrebbero caratterizzare il guardaroba contemporaneo. Blu navy, avorio caldo e marrone cioccolato offrono una base cromatica versatile. Queste osservazioni sono previsioni editoriali, non tendenze già confermate."],
+en:["Fashion 2027: The Return of Modern Elegance","An editorial forecast of new silhouettes.","Looking toward 2027, one possible direction is a return to understated elegance. Fluid tailoring, refined construction and sophisticated materials may characterize contemporary wardrobes. Navy blue, warm ivory and chocolate brown offer a versatile color palette. These observations are editorial predictions, not confirmed future trends."]
+},
+{
+it:["La forza della creatività italiana","Artigianalità e cultura progettuale nella moda internazionale.","La creatività italiana ha contribuito alla storia della moda attraverso competenze tecniche, conoscenza dei materiali e sensibilità estetica. Dalla produzione tessile alla costruzione dei capi, il sapere artigianale continua a rappresentare un valore distintivo. Le nuove generazioni possono reinterpretare questo patrimonio attraverso ricerca, tecnologia e sostenibilità, mantenendo vivo il dialogo tra tradizione e sperimentazione."],
+en:["The Power of Italian Creativity","Craftsmanship and design culture in international fashion.","Italian creativity has contributed to fashion history through technical expertise, material knowledge and aesthetic sensibility. From textile production to garment construction, craftsmanship remains a distinctive value. New generations can reinterpret this heritage through research, technology and sustainability, maintaining a dialogue between tradition and experimentation."]
+}
+];
+let lang='it',current=-1;
+function language(l){lang=l;render()}
+function render(){
+document.documentElement.lang=lang;
+document.getElementById('headline').textContent=data[0][lang][0];
+document.getElementById('intro').textContent=data[0][lang][1];
+document.getElementById('coverbutton').textContent=lang==='it'?'LEGGI ARTICOLO →':'READ ARTICLE →';
+document.getElementById('section').textContent=lang==='it'?'Ultimi articoli':'Latest stories';
+const grid=document.getElementById('grid');grid.innerHTML='';
+data.forEach((item,i)=>{
+const a=document.createElement('article');
+const k=document.createElement('div');k.className='kicker';k.textContent='EDITORIAL / 0'+(i+1);
+const h=document.createElement('h2');h.textContent=item[lang][0];
+const p=document.createElement('p');p.textContent=item[lang][1];
+const b=document.createElement('button');b.textContent=lang==='it'?'LEGGI →':'READ →';b.onclick=()=>read(i);
+a.append(k,h,p,b);grid.appendChild(a);
+});
+if(current>=0)show(current);
+}
+function show(i){
+document.getElementById('title').textContent=data[i][lang][0];
+const c=document.getElementById('content');c.innerHTML='';
+const p=document.createElement('p');p.textContent=data[i][lang][2];c.appendChild(p);
+}
+function read(i){current=i;show(i);document.getElementById('home').style.display='none';document.getElementById('reader').style.display='block';scrollTo(0,0)}
+function home(){current=-1;document.getElementById('reader').style.display='none';document.getElementById('home').style.display='block';scrollTo(0,0)}
+render();
+</script>
+</body>
+</html>
